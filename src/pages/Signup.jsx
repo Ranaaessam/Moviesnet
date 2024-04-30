@@ -137,7 +137,7 @@ const Signup = () => {
             zIndex: "0",
             backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white background
             backgroundImage:
-              'url("https://i.pinimg.com/236x/13/01/05/130105446517355c281022a2fcd435a7.jpg")',
+              'url("https://wallpaperaccess.com/full/3968676.jpg")',
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
@@ -160,7 +160,7 @@ const Signup = () => {
             <Avatar
               sx={{
                 m: 1,
-                bgcolor: "#43a047",
+                bgcolor: "#d32f2f",
                 margin: "auto", // Center the Avatar horizontally
                 marginBottom: "20px", // Add margin bottom for spacing
                 marginTop: "25px", // Adjust margin top to center vertically
@@ -172,7 +172,7 @@ const Signup = () => {
               {/* <PersonIcon sx={{ fontSize: "3rem" }}></PersonIcon> */}
             </Avatar>
 
-            <Typography component="h1" variant="h5" sx={{ marginLeft: "25px" ,color:"#66bb6a"}}>
+            <Typography component="h1" variant="h4" sx={{ marginLeft: "4px" ,color:"#d32f2f"}}>
               Sign up
             </Typography>
             <Box
@@ -215,7 +215,7 @@ const Signup = () => {
                     label="Last Name"
                     sx={{
                       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#66bb6a", // Change border color to green when focused
+                        borderColor: "#d32f2f", // Change border color to green when focused
                       },
                       "& .MuiInputLabel-outlined.Mui-focused": {
                         color: "#d32f2f", // Change placeholder color to green when focused
@@ -291,7 +291,7 @@ const Signup = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} display={"flex"}  justifyContent={"flex-start"}>
                   <FormControlLabel
                     control={<Checkbox color="primary" />}
                     label="I agree to the terms and conditions."

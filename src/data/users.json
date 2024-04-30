@@ -1,14 +1,22 @@
 {
-    "users": [
-    
-      {
-        "id": "7aa6",
-        "email": "Sara@gmail",
-        "password": "Sara123",
-        "confirmPassword": "Sara123",
-        "firstName": "Sara",
-        "lastName": "Abdelsalam",
-        "agreedToTerms": "on"
-      }
-    ]
-  }
+  "users": [
+    {
+      "id": "7aa6",
+      "email": "Sara@gmail",
+      "password": "Sara123",
+      "confirmPassword": "Sara123",
+      "firstName": "Sara",
+      "lastName": "Abdelsalam",
+      "agreedToTerms": "on"
+    },
+    {
+      "id": "30b7",
+      "email": "Ranaessam@gmail.com",
+      "password": "123456",
+      "confirmPassword": "123456",
+      "firstName": "Rana",
+      "lastName": "Essam",
+      "agreedToTerms": "on"
+    }
+  ]
+}
