@@ -1,0 +1,14 @@
+{
+    "users": [
+    
+      {
+        "id": "7aa6",
+        "email": "Sara@gmail",
+        "password": "Sara123",
+        "confirmPassword": "Sara123",
+        "firstName": "Sara",
+        "lastName": "Abdelsalam",
+        "agreedToTerms": "on"
+      }
+    ]
+  }

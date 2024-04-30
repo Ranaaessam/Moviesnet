@@ -13,6 +13,9 @@ const About = lazy(() => import("../pages/About"));
 const Details = lazy(() => import("../pages/Details"));
 const Error = lazy(() => import("../pages/Error"));
 const Movies = lazy(() => import("../pages/MoviesPage"));
+const Signup = lazy(() => import("../pages/Signup"));
+const Login = lazy(() => import("../pages/Login"));
+
 const NavBar = lazy(() => import("../components/Navbar"));
 
 function App() {
@@ -29,6 +32,9 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
         <Route path="/movies" element={<MoviesModule />}>
           <Route index element={<Movies />} />
           <Route path="add" element={<AddMoviePage />} />

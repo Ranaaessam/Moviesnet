@@ -28,6 +28,8 @@ const Movies = () => {
                 <Movie
                     key={movie.id}
                     id={movie.id}
+                    popularity ={movie.popularity}
+                    overview= {movie.overview}
 
                     name={movie.title}
                     vote_count={movie.vote_count}

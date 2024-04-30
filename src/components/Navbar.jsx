@@ -24,6 +24,10 @@ import Details from '../pages/Details';
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'Movies', path: '/movies' },
+  {name:'Login',path:'/login'},
+  {name:'Signup',path:'/signup'},
+
+  
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
