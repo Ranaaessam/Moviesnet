@@ -3,22 +3,9 @@ import "./Moviesapicss.css"
 import { Link } from "react-router-dom";
 
 const Movie = (props) => {
-  // const { name, imgSrc, rate } = props;
-  const { id,name, original_language,vote_count,imgSrc } = props;
-
+  const { id, name, original_language, vote_count, imgSrc,release_date } = props;
 
   const [isHovered, setIsHovered] = useState(false);
-
-
-// const titleStyle = {
-//     position: "absolute",
-//     top: "20px",
-//     bottom:"40px",
-//     left: "20px",
-//     fontSize: "42px",
-//     fontWeight: "bold",
-//     color: "red",
-//     zIndex: "1", }
 
   const imageStyle = {
     width: "200px",
@@ -28,10 +15,16 @@ const Movie = (props) => {
   const textStyle = {
     fontWeight: "bold",
     marginBottom: "2px",
-    color:"white"
+    color: "white"
   };
 
-
+  const containerStyle = {
+    backgroundColor: isHovered ? "#b71c1c" : "transparent",
+    transition: "background-color 0.3s ease",
+    padding: "10px",
+    borderRadius: "8px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+  };
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -42,27 +35,30 @@ const Movie = (props) => {
   };
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      style={containerStyle}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <img src={imgSrc} alt={name} style={imageStyle} />
       <div style={textStyle}>
-        {!isHovered ? (
-          <span>
-            Title: {name.length > 10 ? name.substring(0, 10) + "..." : name}
-          </span>
-        ) : (
-          <span>Title: {name}</span>
-        )}
+        <span>
+          Title: {name && name.length > 10 ? name.substring(0, 10) + "..." : name}
+        </span>
       </div>
-      {/* <div style={titleStyle}>Movies Website</div>Link */}
-       {/* <Link style={titleStyle} elem>Movies Website</Link> */}
       <div style={textStyle}>Language: {original_language}</div>
+
+
       <div style={textStyle}>Vote: {vote_count}</div>
+      <div style={textStyle}>{release_date}</div>
+
+
+      
       <Link to={`/movies/${id}`}>
-        <button className="btn btn-danger"  >SeeMore</button>
-        </Link>
+        <button className="btn btn-danger">SeeMore</button>
+      </Link>
     </div>
   );
-  
 };
 
 export default Movie;

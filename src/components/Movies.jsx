@@ -24,15 +24,15 @@ const Movies = () => {
     return (
         <div className="movies-container">
             {moviesArr.map(movie => (
-                // <AddMoviee></AddMoviee>
                 <Movie
                     key={movie.id}
                     id={movie.id}
                     popularity ={movie.popularity}
                     overview= {movie.overview}
-
+                    original_language= {movie.original_language}
                     name={movie.title}
                     vote_count={movie.vote_count}
+                    release_date ={movie.release_date}
                     imgSrc={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
                 />
             ))}

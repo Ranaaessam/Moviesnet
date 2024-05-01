@@ -8,6 +8,8 @@ import MoviesModule from "../pages/MoviesModule";
 import AddMoviePage from "../pages/AddMoviePage";
 import MoviesContextProvider from "../contexts/MoviesContextProvider";
 import SwipeableTextMobileStepper from '../components/slideShow'
+import Favourites from "../pages/favourites";
+import Profile from "../components/Profile";
 const Home = lazy(() => import("../pages/Home"));
 const About = lazy(() => import("../pages/About"));
 const Details = lazy(() => import("../pages/Details"));
@@ -34,6 +36,11 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/favourites" element={<Favourites />} />
+        <Route path="/add" element={<AddMoviePage />} />
+        <Route path="/profile" element={<Profile />} />
+
+
 
         <Route path="/movies" element={<MoviesModule />}>
           <Route index element={<Movies />} />

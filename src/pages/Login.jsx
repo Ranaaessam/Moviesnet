@@ -29,7 +29,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.get("http://localhost:3001/users");
+      const response = await axios.get("http://localhost:1000/users");
       const userData = response.data;
 
       const userWithEmail = userData.find(
@@ -58,8 +58,7 @@ function Login() {
 
   return (
     <ThemeProvider theme={createTheme()}>
-      
-      <Grid container component="main" sx={{ height: "100vh"}}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -68,11 +67,10 @@ function Login() {
           md={7}
           sx={{
             backgroundImage:
-              "url(https://i.pinimg.com/564x/af/b9/0f/afb90f58ff0f72f68009e7fbfd323fd1.jpg)",
+              "url(https://wallpaperaccess.com/full/1773891.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundColor: "#d32f2f",
             backgroundSize: "100% 100%",
-
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -83,23 +81,30 @@ function Login() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "#66bb6a", width: 80, height: 80 }}>
-              <LoginIcon  sx={{ fontSize: "2.5rem"} } ></LoginIcon>
+            <Avatar sx={{ m: 1, bgcolor: "#d32f2f", width: 80, height: 80 }}>
+              <LoginIcon sx={{ fontSize: "2.5rem" }} />
             </Avatar>
-<Typography component="h1" variant="h5" sx={{ color: "#66bb6a", marginRight: "390px", marginTop: "20px" }}>
-  Login
-</Typography>
-
+            <Typography
+      component="h1"
+      variant="h5"
+      sx={{
+        color: "#d32f2f",
+        marginRight: "390px",
+        marginTop: "20px",
+        fontFamily: 'Oswald, sans-serif',
+        fontWeight: 700, 
+      }}
+    >
+      Login
+    </Typography>
 
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
-              
             >
               <TextField
                 margin="normal"
@@ -114,10 +119,10 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 sx={{
                   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#66bb6a",
+                    borderColor: "#d32f2f",
                   },
                   "& .MuiInputLabel-outlined.Mui-focused": {
-                    color: "#66bb6a",
+                    color: "#d32f2f",
                   },
                 }}
               />
@@ -134,50 +139,66 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 sx={{
                   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#66bb6a",
+                    borderColor: "#d32f2f",
                   },
                   "& .MuiInputLabel-outlined.Mui-focused": {
-                    color: "#66bb6a",
+                    color: "#d32f2f",
                   },
                 }}
               />
               {error && (
-                <Typography variant="body2" color="error" sx={{ marginTop: "10px" }}>
+                <Typography
+                  variant="body2"
+                  color="error"
+                  sx={{ marginTop: "10px" }}
+                >
                   {error}
                 </Typography>
               )}
               {success && (
-                <Typography variant="body2" color="#66bb6a">
+                <Typography variant="body2" sx={{ color: "#d32f2f" }}>
                   Sign in successful! Redirecting...
                 </Typography>
               )}
 
-<div style={{ display: "flex", justifyContent: "center" }}>
-                <Button
-                  type="submit"
-                  width="100%"
-                  variant="contained"
-                  sx={{ mt: 5, mb: 2, bgcolor: "#66bb6a", "&:hover": { bgcolor: "#4caf50" },width:"200px" ,marginTop:"40px",marginBottom:"20px"}}
-                >
-                 Login
-                </Button>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+      control={<Checkbox value="remember" color="primary" />}
+      label="Remember me"
+      sx={{ mt: 3 }} // Apply margin to the label
+    />
+                <Link href="#" variant="body2" sx={{ color: "#d32f2f", mt:3 }}>
+                  Forgot password?
+                </Link>
               </div>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2" sx={{ color: "#66bb6a" }}>
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/signup" variant="body2" sx={{ color: "#66bb6a" }}>
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div></div>
+                <Link href="/signup" variant="body1" sx={{ color: "#d32f2f" , mt:3}}>
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </div>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 5, mb: 2, bgcolor: "#d32f2f", "&:hover": { bgcolor: "red" } }}
+              >
+                Sign In
+              </Button>
             </Box>
           </Box>
         </Grid>

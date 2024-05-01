@@ -1,45 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { styled } from '@mui/material/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 const Details = () => {
     const { id } = useParams();
     const [error, setError] = useState(null);
     const [movie, setMovie] = useState(null);
-    const [expanded, setExpanded] = useState(false);
-    const [deleted, setDeleted] = useState(false); // State to track deletion
+    const [deleted, setDeleted] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMovieDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:1000/results/${id}`);
                 setMovie(response.data);
+                const favs = JSON.parse(localStorage.getItem('favs')) || [];
+                setIsFavorite(favs.some(item => item.id === response.data.id));
             } catch (error) {
                 console.error('Error fetching movie details:', error);
                 setError(error.message);
@@ -47,73 +32,65 @@ const Details = () => {
         };
 
         fetchMovieDetails();
-
     }, [id]);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const handleFavorites = () => {
+        const favs = JSON.parse(localStorage.getItem('favs')) || [];
+    
+        const existingIndex = favs.findIndex((item) => item.id === movie.id);
+        if (existingIndex === -1) {
+            favs.push(movie);
+            localStorage.setItem('favs', JSON.stringify(favs));
+            window.alert("Movie added to favorites successfully!✅");
+            setIsFavorite(true); 
+        } else {
+            favs.splice(existingIndex, 1);
+            localStorage.setItem('favs', JSON.stringify(favs));
+            window.alert("Movie removed from favourites!");
+            setIsFavorite(false); 
+        }
+    };
+    
+
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:1000/results/${id}`);
+            setDeleted(true);
+            window.alert("Movie deleted successfully!, will be redirected to home shortly...")
+            setTimeout(() => {
+                navigate('/movies');
+            }, 2000);
+        } catch (error) {
+            console.error('Error deleting movie:', error);
+            setError(error.message);
+        }
     };
 
-    const handleDelete = () => {
-        setDeleted(true);
-    };
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    if (!movie) {
-        return <div>Loading...</div>;
-    }
 
     return (
-        <div style={{ 
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            minHeight: '100vh',
-            background: 'linear-gradient(to bottom, #000000, #222222)',
-        }}>
-            <Card sx={{ maxWidth: 500, height: 680, width: '100%', background: 'linear-gradient(to right, #616161, #212121)', borderRadius: 8, boxShadow: '0 0 10px rgba(255, 255, 255, 0.5)' }}>
-                <CardHeader
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            {` ${movie.title[0]}`}
-                        </Avatar>
-                    }
-                    title={
-                        <Typography sx={{ color: 'white', fontSize: '30px', marginLeft: '-50px' }}>{` ${movie.title}`}</Typography>
-                    }
+        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '35px' }}>
+            {/* //card itself */}
+            <Card sx={{
+                width: 'calc(100% - 520px)', 
+                maxWidth: 500,
+                background: 'linear-gradient(to right, #616161, #212121)',
+                borderRadius: 8,
+                boxShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}>
+                <CardMedia
+                    component="img"
+                    height="450"
+                    width="400"
+                    image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                    style={{ objectFit: 'contain', borderRadius: '20px' }}
                 />
-
-<CardMedia
-    component="img"
-    height="450"
-    width="800"
-    image={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-    style={{ objectFit: 'contain' }}
-   
-/>
-
-
-                <CardContent sx={{ textAlign: 'start', color: 'white' }}>
-                    <Typography variant="h5" color="white">
-                        Movies information:
-                    </Typography>
-                    <Typography variant="h6" color="white">
-                        Vote: {movie.vote_count}
-                    </Typography>
-                    <Typography variant="h6" color="white">
-                        Adult: {movie.adult ? 'Yes' : 'No'}
-                    </Typography>
-                    <Typography variant="h6" color="white">
-                        Language: {movie.original_language}
-                    </Typography>
-                </CardContent>
-
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon style={{ color: 'white' }} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                    <IconButton aria-label="add to favorites" onClick={handleFavorites}>
+                        <FavoriteIcon style={{ color: isFavorite ? 'red' : 'white' }} />
                     </IconButton>
                     <IconButton aria-label="share">
                         <ShareIcon style={{ color: 'white' }} />
@@ -121,33 +98,37 @@ const Details = () => {
                     <IconButton aria-label="delete" onClick={handleDelete}>
                         <DeleteIcon style={{ color: 'white' }} />
                     </IconButton>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                        color="white"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </CardActions>
+                </div>
+            </Card>
+            <div style={{ maxWidth: 'calc(100% - 520px)', marginLeft: '20px', alignItems: 'flex-start' }}>
 
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph color="white">Brief Description:</Typography>
-                        <Typography paragraph color="white">
-                           {movie.overview}
-                        </Typography>
-                        {/* Add more movie details here */}
-                    </CardContent>
-                </Collapse>
+                <Typography variant="h3" color="white" gutterBottom sx={{ m: 3, textAlign: 'left' }}>
+                    {movie.title}
+                </Typography>
+                <Typography variant="h6" color="white" gutterBottom sx={{ m: 3, textAlign: 'left' }}>
+                    Number of votes: {movie.vote_count}
+                </Typography>
+                <Typography variant="h6" color="white" gutterBottom sx={{ m: 3, textAlign: 'left' }}>
+                    Adult frie: {movie.adult ? true : false}
+                </Typography>
+                <Typography variant="h6" color="white" gutterBottom sx={{ m: 3, textAlign: 'left' }}>
+                    Language: {movie.original_language}
+                </Typography>
+                <Typography sx={{ m: 3, textShadow: '2px 2px 4px rgba(255, 0, 0, 0.5)', color: 'red', fontWeight: 'bold', fontSize: '2.5rem', textAlign: 'left' }}>
+                    Brief Description:
+                </Typography>
 
+                <Typography variant="body1" color="white" paragraph sx={{ m: 3, textAlign: 'left' }}>
+                    {movie.overview}
+                </Typography>
+
+                
                 {deleted && (
-                    <Typography variant="body1" style={{ color: 'white', textAlign: 'center', marginTop: '10px' }}>
+                    <Typography variant="body1" style={{ color: 'red' }}>
                         Movie deleted successfully!
                     </Typography>
                 )}
-            </Card>
+            </div>
         </div>
     );
 }
